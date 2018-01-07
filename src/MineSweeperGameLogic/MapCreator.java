@@ -1,4 +1,4 @@
-package MineSweeperMapCreation;
+package MineSweeperGameLogic;
 
 import java.util.Random;
 
@@ -17,12 +17,7 @@ public class MapCreator {
      * @param columns
      * @param bombCount
      */
-    public MapCreator(int rows, int columns, int bombCount) {
-
-        if (rows < 1 || columns < 1 || bombCount < 1) {
-            throw new InvalidValuesException("Rows, columns, or bomb count not high enough");
-        }
-
+    public MapCreator(int rows, int columns, int bombCount){
         ROWS = rows;
         COLUMNS = columns;
         BOMBCOUNT = bombCount;
