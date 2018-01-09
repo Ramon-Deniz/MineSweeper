@@ -8,7 +8,7 @@ package MineSweeperGameLogic;
 public class GameLogic {
     
     public static boolean isValidDimension(int rows, int columns, int bomb_count) {
-        if (rows < 10 || columns < 10 || bomb_count < Math.sqrt(rows * columns) / 2) {
+        if (rows < 10 || columns < 10 || bomb_count < 1) {
             return false;
         }
 
@@ -18,4 +18,17 @@ public class GameLogic {
         
         return true;
     }
+    
+    public static boolean isValidDimension(int rows, int columns) {
+        if (rows < 10 || columns < 10) {
+            return false;
+        }
+
+        if (rows > 40 || columns > 40) {
+            return false;
+        }
+        
+        return true;
+    }
+    
 }
