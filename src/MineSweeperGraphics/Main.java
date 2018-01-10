@@ -6,13 +6,12 @@
 package MineSweeperGraphics;
 
 import MineSweeperGameLogic.GameLogic;
+import MineSweeperGameLogic.MapCreator;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -24,37 +23,35 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("MineSweeper");
-        
+
         PromptLayout prompt = new PromptLayout();
-        GridPane grid = prompt.GRID;
         GameLayout game = new GameLayout();
-        
+        primaryStage.setScene(prompt.PROMPT_SCENE);
+        MapCreator map = new MapCreator();
+
         prompt.CREATE_GAME.setOnAction((ActionEvent event) -> {
             try {
-                int inputToInt = Integer.parseInt(prompt.input.getText());
-                int inputToInt2 = Integer.parseInt(prompt.input2.getText());
-                int inputToInt3 = Integer.parseInt(prompt.input3.getText());
-                if (GameLogic.isValidDimension(inputToInt, inputToInt2, inputToInt3)) {
-                    game.setLayout(inputToInt, inputToInt2);
-                    primaryStage.setScene(new Scene(game.ROOT,game.WIDTH,game.HEIGHT));
-                }
-                else if(GameLogic.isValidDimension(inputToInt, inputToInt2)){
-                    prompt.errors.setText("Bomb count must be\nbetween 1 and "+(inputToInt*inputToInt2/2));
-                }
-                else {
-                    prompt.errors.setText("Invalid Numbers");
+                if (GameLogic.isValidDimension(prompt.getInput(), prompt.getInput2(), prompt.getInput3())) {
+                    game.setLayout(prompt.getInput(), prompt.getInput2());
+                    primaryStage.setScene(game.gameScene);
+                    map.setMap(prompt.getInput(), prompt.getInput2(), prompt.getInput3());
+                    System.out.println(map);
+                } else if (GameLogic.isValidDimension(prompt.getInput(), prompt.getInput2())) {
+                    prompt.setBombError();
+                } else {
+                    prompt.setError();
                 }
             } catch (NumberFormatException e) {
-                prompt.errors.setText("Invalid Input");
+                prompt.setInvalidInputError();
             }
         });
-        
+
         game.game_rectangle.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println(event.getX()+","+event.getY());
-            game.addTile(event.getX(), event.getY());
+            if (event.getButton() == MouseButton.PRIMARY) {
+                GameLogic.revealTiles(game, map, event.getX(), event.getY());
+            }
         });
 
-        primaryStage.setScene(new Scene(grid));
         primaryStage.show();
     }
 

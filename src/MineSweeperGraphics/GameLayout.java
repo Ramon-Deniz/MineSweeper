@@ -1,6 +1,7 @@
 package MineSweeperGraphics;
 
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -18,14 +19,11 @@ public class GameLayout {
     private int Y2;
     private int X2;
 
-    private int TILE_SIZE = 20;
+    public final int TILE_SIZE = 20;
     private int ROWS;
     private int COLUMNS;
-    public Group ROOT;
-
-    //Colors
-    private final Color BACKGROUND_COLOR = Color.rgb(25, 25, 25);
-    private final Color EMPTY_TILE_COLOR = Color.LIGHTGRAY;
+    public Group root;
+    public Scene gameScene;
 
     //Rectangles
     public Rectangle game_rectangle;
@@ -35,7 +33,7 @@ public class GameLayout {
     private Line[] hLines;
 
     public GameLayout() {
-        ROOT = new Group();
+        root = new Group();
         game_rectangle = new Rectangle();
     }
 
@@ -51,6 +49,7 @@ public class GameLayout {
         setGameRectangle();
         setVerticalLines();
         setHorizontalLines();
+        gameScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(150, 150, 150));
     }
 
     private Text getTimeText(long currentTime) {
@@ -59,17 +58,24 @@ public class GameLayout {
         return timeText;
     }
 
-    public void addTile(double cordX, double cordY) {
-        if ((cordX - X) % TILE_SIZE != 0 && (cordY - Y) % TILE_SIZE != 0) {
-            Rectangle tile = new Rectangle();
-            tile.setWidth(TILE_SIZE - 2);
-            tile.setHeight(TILE_SIZE - 2);
-            tile.setX((((int) (cordX) - X) / TILE_SIZE) * TILE_SIZE + X + 1);
-            tile.setY((((int) (cordY) - Y) / TILE_SIZE) * TILE_SIZE + Y + 1);
-            System.out.println(tile.getX() + "," + tile.getY());
-            ROOT.getChildren().add(tile);
-        }
-
+    public void addTile(int col, int row) {
+        Rectangle tile = new Rectangle();
+        tile.setWidth(TILE_SIZE - 2);
+        tile.setHeight(TILE_SIZE - 2);
+        tile.setX(getX(col) + 1);
+        tile.setY(getY(row) + 1);
+        tile.setFill(Color.LIGHTGRAY);
+        root.getChildren().add(tile);
+    }
+    
+    public void addBombTile(int col, int row){
+        Rectangle tile = new Rectangle();
+        tile.setWidth(TILE_SIZE - 2);
+        tile.setHeight(TILE_SIZE - 2);
+        tile.setX(getX(col) + 1);
+        tile.setY(getY(row) + 1);
+        tile.setFill(Color.RED);
+        root.getChildren().add(tile);
     }
 
     private void setGameRectangle() {
@@ -78,7 +84,7 @@ public class GameLayout {
         game_rectangle.setWidth(WIDTH - (2 * X));
         game_rectangle.setHeight(HEIGHT - X - Y);
         game_rectangle.setFill(Color.GRAY);
-        ROOT.getChildren().add(game_rectangle);
+        root.getChildren().add(game_rectangle);
     }
 
     private void setVerticalLines() {
@@ -89,7 +95,7 @@ public class GameLayout {
             vLines[i].setStartY(Y);
             vLines[i].setEndX((i * TILE_SIZE) + X);
             vLines[i].setEndY(Y2);
-            ROOT.getChildren().add(vLines[i]);
+            root.getChildren().add(vLines[i]);
         }
 
     }
@@ -102,8 +108,32 @@ public class GameLayout {
             hLines[i].setStartY((i * TILE_SIZE) + Y);
             hLines[i].setEndX(X2);
             hLines[i].setEndY((i * TILE_SIZE) + Y);
-            ROOT.getChildren().add(hLines[i]);
+            root.getChildren().add(hLines[i]);
         }
+    }
+    
+    public int getX(int col){
+        return col*TILE_SIZE+X;
+    }
+    
+    public int getY(int row){
+        return row*TILE_SIZE+Y;
+    }
+
+    public int getRow(double cordY) {
+        return ((int) (cordY) - Y) / TILE_SIZE;
+    }
+
+    public int getColumn(double cordX) {
+        return ((int) (cordX) - X) / TILE_SIZE;
+    }
+    
+    public int getRows(){
+        return ROWS;
+    }
+    
+    public int getColumns(){
+        return COLUMNS;
     }
 
 }

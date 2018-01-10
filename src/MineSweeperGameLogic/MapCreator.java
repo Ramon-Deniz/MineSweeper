@@ -4,24 +4,19 @@ import java.util.Random;
 
 public class MapCreator {
 
-    private final int ROWS;
-    private final int COLUMNS;
-    private final int BOMBCOUNT;
+    private int ROWS;
+    private int COLUMNS;
+    private int BOMBCOUNT;
 
-    private final int[][] BOMB_LOCATIONS;
-
-    /**
-     * Constructor
-     *
-     * @param rows
-     * @param columns
-     * @param bombCount
-     */
-    public MapCreator(int rows, int columns, int bombCount){
+    private int[][] BOMB_LOCATIONS;
+    public boolean[][] revealed;
+    
+    public void setMap(int rows, int columns, int bombCount){
         ROWS = rows;
         COLUMNS = columns;
         BOMBCOUNT = bombCount;
         BOMB_LOCATIONS = new int[ROWS][COLUMNS];
+        revealed = new boolean[ROWS][COLUMNS];
         setBombs();
     }
 
