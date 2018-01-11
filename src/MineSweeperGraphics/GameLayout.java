@@ -64,11 +64,11 @@ public class GameLayout {
         tile.setHeight(TILE_SIZE - 2);
         tile.setX(getX(col) + 1);
         tile.setY(getY(row) + 1);
-        tile.setFill(Color.LIGHTGRAY);
+        tile.setFill(Color.DARKGRAY);
         root.getChildren().add(tile);
     }
-    
-    public void addBombTile(int col, int row){
+
+    public void addBombTile(int col, int row) {
         Rectangle tile = new Rectangle();
         tile.setWidth(TILE_SIZE - 2);
         tile.setHeight(TILE_SIZE - 2);
@@ -83,7 +83,7 @@ public class GameLayout {
         game_rectangle.setY(Y);
         game_rectangle.setWidth(WIDTH - (2 * X));
         game_rectangle.setHeight(HEIGHT - X - Y);
-        game_rectangle.setFill(Color.GRAY);
+        game_rectangle.setFill(Color.rgb(99, 99, 99));
         root.getChildren().add(game_rectangle);
     }
 
@@ -111,13 +111,13 @@ public class GameLayout {
             root.getChildren().add(hLines[i]);
         }
     }
-    
-    public int getX(int col){
-        return col*TILE_SIZE+X;
+
+    public int getX(int col) {
+        return col * TILE_SIZE + X;
     }
-    
-    public int getY(int row){
-        return row*TILE_SIZE+Y;
+
+    public int getY(int row) {
+        return row * TILE_SIZE + Y;
     }
 
     public int getRow(double cordY) {
@@ -127,12 +127,12 @@ public class GameLayout {
     public int getColumn(double cordX) {
         return ((int) (cordX) - X) / TILE_SIZE;
     }
-    
-    public int getRows(){
+
+    public int getRows() {
         return ROWS;
     }
-    
-    public int getColumns(){
+
+    public int getColumns() {
         return COLUMNS;
     }
 

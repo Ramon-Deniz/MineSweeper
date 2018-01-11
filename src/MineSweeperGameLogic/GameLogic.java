@@ -1,21 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package MineSweeperGameLogic;
 
 import MineSweeperGraphics.GameLayout;
 import MineSweeperGraphics.GraphicsAppender;
+import MineSweeperGraphics.PromptLayout;
+import javafx.scene.Group;
+import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 public class GameLogic {
 
     public static boolean isValidDimension(int rows, int columns, int bomb_count) {
-        if (rows < 10 || columns < 10 || bomb_count < 1) {
+        if (rows < 1 || columns < 1 || bomb_count < 1) {
             return false;
         }
 
-        if (rows > 40 || columns > 40 || bomb_count > (rows * columns) / 2) {
+        if (rows > 47 || columns > 94 || bomb_count > (rows * columns * 10) / 6) {
             return false;
         }
 
@@ -23,20 +22,30 @@ public class GameLogic {
     }
 
     public static boolean isValidDimension(int rows, int columns) {
-        if (rows < 10 || columns < 10) {
+        if (rows < 1 || columns < 1) {
             return false;
         }
 
-        if (rows > 40 || columns > 40) {
+        if (rows > 47 || columns > 94) {
             return false;
         }
 
         return true;
     }
 
-    public static void revealTiles(GameLayout game, MapCreator map, double cordX, double cordY) {
+    public static void revealTiles(Stage primaryStage, PromptLayout prompt, GameLayout game, MapCreator map, double cordX, double cordY) {
         int col = game.getColumn(cordX);
         int row = game.getRow(cordY);
+        if (map.getBombLocations()[row][col] == -1) {
+            JOptionPane.showMessageDialog(null,
+                    "You clicked on a bomb",
+                    "Game Over",
+                    JOptionPane.ERROR_MESSAGE);
+            game.root.getChildren().clear();
+            prompt.errors.setText("");
+            primaryStage.setScene(prompt.PROMPT_SCENE);
+            game.gameScene.setRoot(new Group());
+        }
         revealNearbyTiles(game, map, row, col);
     }
 

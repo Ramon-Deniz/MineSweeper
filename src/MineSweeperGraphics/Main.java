@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package MineSweeperGraphics;
 
 import MineSweeperGameLogic.GameLogic;
@@ -35,7 +30,6 @@ public class Main extends Application {
                     game.setLayout(prompt.getInput(), prompt.getInput2());
                     primaryStage.setScene(game.gameScene);
                     map.setMap(prompt.getInput(), prompt.getInput2(), prompt.getInput3());
-                    System.out.println(map);
                 } else if (GameLogic.isValidDimension(prompt.getInput(), prompt.getInput2())) {
                     prompt.setBombError();
                 } else {
@@ -48,7 +42,7 @@ public class Main extends Application {
 
         game.game_rectangle.setOnMouseClicked((MouseEvent event) -> {
             if (event.getButton() == MouseButton.PRIMARY) {
-                GameLogic.revealTiles(game, map, event.getX(), event.getY());
+                GameLogic.revealTiles(primaryStage, prompt, game, map, event.getX(), event.getY());
             }
         });
 
