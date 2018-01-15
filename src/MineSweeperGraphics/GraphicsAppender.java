@@ -1,7 +1,7 @@
-
 package MineSweeperGraphics;
 
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -20,7 +20,13 @@ public class GraphicsAppender {
         game.root.getChildren().add(tileText);
     }
 
-    public static void addBombTile(GameLayout game, int row, int col) {
-
+    public static void addTile(GameLayout game, int row, int col) {
+        Rectangle tile = new Rectangle();
+        tile.setHeight(game.TILE_SIZE - 2);
+        tile.setWidth(game.TILE_SIZE - 2);
+        tile.setY(game.getY(row) + 1);
+        tile.setX(game.getX(col) + 1);
+        tile.setFill(Color.DARKGRAY);
+        game.root.getChildren().add(tile);
     }
 }

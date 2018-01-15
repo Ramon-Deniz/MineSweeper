@@ -10,6 +10,7 @@ public class MapCreator {
 
     private int[][] BOMB_LOCATIONS;
     public boolean[][] revealed;
+    public boolean[][] flagPos;
     
     public void setMap(int rows, int columns, int bombCount){
         ROWS = rows;
@@ -17,6 +18,7 @@ public class MapCreator {
         BOMBCOUNT = bombCount;
         BOMB_LOCATIONS = new int[ROWS][COLUMNS];
         revealed = new boolean[ROWS][COLUMNS];
+        flagPos = new boolean[ROWS][COLUMNS];
         setBombs();
     }
 

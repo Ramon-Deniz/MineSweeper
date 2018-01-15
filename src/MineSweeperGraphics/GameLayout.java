@@ -58,26 +58,6 @@ public class GameLayout {
         return timeText;
     }
 
-    public void addTile(int col, int row) {
-        Rectangle tile = new Rectangle();
-        tile.setWidth(TILE_SIZE - 2);
-        tile.setHeight(TILE_SIZE - 2);
-        tile.setX(getX(col) + 1);
-        tile.setY(getY(row) + 1);
-        tile.setFill(Color.DARKGRAY);
-        root.getChildren().add(tile);
-    }
-
-    public void addBombTile(int col, int row) {
-        Rectangle tile = new Rectangle();
-        tile.setWidth(TILE_SIZE - 2);
-        tile.setHeight(TILE_SIZE - 2);
-        tile.setX(getX(col) + 1);
-        tile.setY(getY(row) + 1);
-        tile.setFill(Color.RED);
-        root.getChildren().add(tile);
-    }
-
     private void setGameRectangle() {
         game_rectangle.setX(X);
         game_rectangle.setY(Y);
@@ -111,27 +91,27 @@ public class GameLayout {
             root.getChildren().add(hLines[i]);
         }
     }
-
+    //Returns X coordinates given a column index
     public int getX(int col) {
         return col * TILE_SIZE + X;
     }
-
+    //Returns Y coordinates given a row index
     public int getY(int row) {
         return row * TILE_SIZE + Y;
     }
-
+    //Returns a row index given a Y coordinate
     public int getRow(double cordY) {
         return ((int) (cordY) - Y) / TILE_SIZE;
     }
-
+    //Returns a column index given an X coordinate
     public int getColumn(double cordX) {
         return ((int) (cordX) - X) / TILE_SIZE;
     }
-
+    //Returns the amount of row indexes
     public int getRows() {
         return ROWS;
     }
-
+    //Returns the amount of column indexes
     public int getColumns() {
         return COLUMNS;
     }

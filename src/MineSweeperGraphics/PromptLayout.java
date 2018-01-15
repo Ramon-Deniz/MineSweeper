@@ -1,6 +1,7 @@
 package MineSweeperGraphics;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -34,17 +35,30 @@ public class PromptLayout {
 
     private void setPromptLayout() {
         GRID.setVgap(15);
-        GRID.setPadding(new Insets(25, 25, 25, 25));
+        GRID.setPadding(new Insets(200, 200, 200, 200));
+        GRID.setAlignment(Pos.CENTER);
 
         GRID.add(input, 0, 1);
         GRID.add(input2, 0, 3);
         GRID.add(input3, 0, 5);
         GRID.add(errors, 0, 7);
-        GRID.add(new Text("Enter Row Count (1-47)"), 0, 0);
-        GRID.add(new Text("Enter Column Count (1-94)"), 0, 2);
+        GRID.add(new Text("Enter Row Count (10-47)"), 0, 0);
+        GRID.add(new Text("Enter Column Count (10-94)"), 0, 2);
         GRID.add(new Text("Enter Bomb Count"), 0, 4);
         GRID.add(CREATE_GAME, 0, 6);
         GRID.setStyle("-fx-background-color: #969696;");
+    }
+    
+    public void setRowError(int min, int max){
+        errors.setText("The Row Count should be between " + min + " and " + max + "\n");
+    }
+    
+    public void setColumnError(int min, int max){
+        errors.setText(errors.getText() + "The Column Count should be between " + min + " and " + max + "\n");
+    }
+    
+    public void setBombCountError(int max){
+        errors.setText(errors.getText()+"The Bomb Count should be between 1 and "+max);
     }
 
     //Only called when two or more inputs are invalid.
