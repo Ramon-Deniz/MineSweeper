@@ -4,7 +4,6 @@ import MineSweeperGraphics.Flag;
 import MineSweeperGraphics.GameLayout;
 import MineSweeperGraphics.GraphicsAppender;
 import MineSweeperGraphics.PromptLayout;
-import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
@@ -38,9 +37,7 @@ public class GameLogic {
         int col = game.getColumn(coordX);
         if (map.flagPos[row][col]) {
             game.root.getChildren().set(game.root.getChildren().indexOf(tempFlag), new ImageView());
-            
             map.flagPos[row][col] = false;
-            System.out.println("Removed");
         } else {
             game.root.getChildren().add(tempFlag);
             map.flagPos[row][col] = true;
@@ -55,17 +52,21 @@ public class GameLogic {
                     "You clicked on a bomb",
                     "Game Over",
                     JOptionPane.ERROR_MESSAGE);
-            game.root.getChildren().clear();
-            prompt.errors.setText("");
-            primaryStage.setScene(prompt.PROMPT_SCENE);
-            game.gameScene.setRoot(new Group());
+            game.newGame(primaryStage, prompt, false);
         }
-        revealNearbyTiles(game, map, row, col);
+        revealNearbyTiles(primaryStage, game, prompt, map, row, col);
     }
 
-    private static void revealNearbyTiles(GameLayout game, MapCreator map, int row, int col) {
+    private static void revealNearbyTiles(Stage primaryStage, GameLayout game, PromptLayout prompt, MapCreator map, int row, int col) {
         int tileValue = map.getBombLocations()[row][col];
         GraphicsAppender.addTile(game, row, col);
+        map.tilesRevealed--;
+        if (map.tilesRevealed == map.getBombCount()) {
+            JOptionPane.showMessageDialog(null, "You've found all the bombs.",
+                    "You've won",
+                    JOptionPane.PLAIN_MESSAGE);
+            game.newGame(primaryStage, prompt,true);
+        }
         if (tileValue > 0) {
             GraphicsAppender.addTileNumber(game, tileValue, row, col);
         }
@@ -78,7 +79,7 @@ public class GameLogic {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (isInMap(game, map, row + i, col + j)) {
-                    revealNearbyTiles(game, map, row + i, col + j);
+                    revealNearbyTiles(primaryStage, game, prompt, map, row + i, col + j);
                 }
             }
         }

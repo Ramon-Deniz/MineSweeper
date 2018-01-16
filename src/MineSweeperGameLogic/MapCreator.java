@@ -6,19 +6,21 @@ public class MapCreator {
 
     private int ROWS;
     private int COLUMNS;
-    private int BOMBCOUNT;
+    private int BOMB_COUNT;
 
     private int[][] BOMB_LOCATIONS;
     public boolean[][] revealed;
     public boolean[][] flagPos;
+    public int tilesRevealed;
     
     public void setMap(int rows, int columns, int bombCount){
         ROWS = rows;
         COLUMNS = columns;
-        BOMBCOUNT = bombCount;
+        BOMB_COUNT = bombCount;
         BOMB_LOCATIONS = new int[ROWS][COLUMNS];
         revealed = new boolean[ROWS][COLUMNS];
         flagPos = new boolean[ROWS][COLUMNS];
+        tilesRevealed=ROWS*COLUMNS;
         setBombs();
     }
 
@@ -30,7 +32,7 @@ public class MapCreator {
         Random rand = new Random();
         int bombsPlaced = 0;
 
-        while (bombsPlaced != BOMBCOUNT) {
+        while (bombsPlaced != BOMB_COUNT) {
             int row = rand.nextInt(ROWS);
             int col = rand.nextInt(COLUMNS);
 
@@ -109,6 +111,10 @@ public class MapCreator {
      */
     public int[][] getBombLocations() {
         return BOMB_LOCATIONS;
+    }
+    
+    public int getBombCount(){
+        return BOMB_COUNT;
     }
 
 }

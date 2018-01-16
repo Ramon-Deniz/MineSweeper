@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class GameLayout {
 
@@ -32,9 +33,14 @@ public class GameLayout {
     private Line[] vLines;
     private Line[] hLines;
 
+    //Time
+    private Text timeText;
+    public TimeCount time;
+
     public GameLayout() {
         root = new Group();
         game_rectangle = new Rectangle();
+        timeText = new Text();
     }
 
     public void setLayout(int rows, int columns) {
@@ -49,13 +55,17 @@ public class GameLayout {
         setGameRectangle();
         setVerticalLines();
         setHorizontalLines();
+        setTime();
         gameScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(150, 150, 150));
     }
 
-    private Text getTimeText(long currentTime) {
-        Text timeText = new Text();
-        double timeTextX = timeText.getLayoutBounds().getWidth();
-        return timeText;
+    private void setTime() {
+        timeText.setText("00:00:00");
+        timeText.setLayoutX(X);
+        timeText.setLayoutY(Y / 2);
+        time = new TimeCount(timeText);
+        time.countTime();
+        root.getChildren().add(timeText);
     }
 
     private void setGameRectangle() {
@@ -91,29 +101,44 @@ public class GameLayout {
             root.getChildren().add(hLines[i]);
         }
     }
+
     //Returns X coordinates given a column index
     public int getX(int col) {
         return col * TILE_SIZE + X;
     }
+
     //Returns Y coordinates given a row index
     public int getY(int row) {
         return row * TILE_SIZE + Y;
     }
+
     //Returns a row index given a Y coordinate
     public int getRow(double cordY) {
         return ((int) (cordY) - Y) / TILE_SIZE;
     }
+
     //Returns a column index given an X coordinate
     public int getColumn(double cordX) {
         return ((int) (cordX) - X) / TILE_SIZE;
     }
+
     //Returns the amount of row indexes
     public int getRows() {
         return ROWS;
     }
+
     //Returns the amount of column indexes
     public int getColumns() {
         return COLUMNS;
+    }
+
+    public void newGame(Stage primaryStage, PromptLayout prompt, boolean gameLost) {
+        root.getChildren().clear();
+        time.gameEnded = true;
+        primaryStage.setScene(prompt.PROMPT_SCENE);
+        prompt.errors.setText("");
+        gameScene.setRoot(new Group());
+        timeText.setText("00:00:00");
     }
 
 }
