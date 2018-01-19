@@ -138,7 +138,6 @@ public class GameLayout {
         primaryStage.setScene(prompt.PROMPT_SCENE);
         prompt.errors.setText("");
         gameScene.setRoot(new Group());
-        timeText.setText("00:00:00");
     }
 
 }
