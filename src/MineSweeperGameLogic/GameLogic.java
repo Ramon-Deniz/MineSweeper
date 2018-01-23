@@ -62,7 +62,7 @@ public class GameLogic {
         GraphicsAppender.addTile(game, row, col);
         map.tilesRevealed--;
         if (map.tilesRevealed == map.getBombCount()) {
-            JOptionPane.showMessageDialog(null, "You've found all the bombs.",
+            JOptionPane.showMessageDialog(null, "You've found all the bombs. \nTime: "+game.time.getTime(),
                     "You've won",
                     JOptionPane.PLAIN_MESSAGE);
             game.newGame(primaryStage, prompt,true);

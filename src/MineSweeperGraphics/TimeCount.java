@@ -38,5 +38,13 @@ public class TimeCount {
         timeText.setText(String.format("%02d:%02d:%02d", hour, minute, second));
         countTime();
     }
+    
+    public String getTime(){
+        long currentTime = System.currentTimeMillis() - startTime;
+        int hour = (int) (currentTime / 3600000);
+        int minute = (int) (currentTime / 60000) % 60;
+        int second = (int) (currentTime / 1000) % 60;
+        return String.format("%02d:%02d:%02d", hour, minute, second);
+    }
 
 }
