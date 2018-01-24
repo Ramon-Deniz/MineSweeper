@@ -27,7 +27,7 @@ public class Main extends Application {
         prompt.CREATE_GAME.setOnAction((ActionEvent event) -> {
             try {
                 if (GameLogic.setErrors(prompt, prompt.getInput(), prompt.getInput2(), prompt.getInput3())) {
-                    game.setLayout(prompt.getInput(), prompt.getInput2());
+                    game.setLayout(prompt.getInput(), prompt.getInput2(), prompt.getInput3());
                     primaryStage.setScene(game.gameScene);
                     map.setMap(prompt.getInput(), prompt.getInput2(), prompt.getInput3());
                 }

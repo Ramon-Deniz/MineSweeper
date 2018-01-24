@@ -37,9 +37,11 @@ public class GameLogic {
         int col = game.getColumn(coordX);
         if (map.flagPos[row][col]) {
             game.root.getChildren().set(game.root.getChildren().indexOf(tempFlag), new ImageView());
+            game.updateFlagCount(-1);
             map.flagPos[row][col] = false;
         } else {
             game.root.getChildren().add(tempFlag);
+            game.updateFlagCount(1);
             map.flagPos[row][col] = true;
         }
     }
@@ -66,6 +68,9 @@ public class GameLogic {
                     "You've won",
                     JOptionPane.PLAIN_MESSAGE);
             game.newGame(primaryStage, prompt,true);
+        }
+        if(map.flagPos[row][col]){
+            game.updateFlagCount(-1);
         }
         if (tileValue > 0) {
             GraphicsAppender.addTileNumber(game, tileValue, row, col);

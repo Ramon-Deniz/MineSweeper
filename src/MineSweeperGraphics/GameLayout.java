@@ -37,17 +37,26 @@ public class GameLayout {
     private Text timeText;
     public TimeCount time;
 
+    //Flag Count
+    private Text flagCountText;
+    public int flagCount;
+
+    //Bomb Count
+    private int BOMB_COUNT;
+
     public GameLayout() {
         root = new Group();
         game_rectangle = new Rectangle();
         timeText = new Text();
+        flagCountText = new Text();
     }
 
-    public void setLayout(int rows, int columns) {
+    public void setLayout(int rows, int columns, int bombCount) {
         WIDTH = (columns * TILE_SIZE) + (2 * X);
         HEIGHT = (rows * TILE_SIZE) + X + Y;
         ROWS = rows;
         COLUMNS = columns;
+        BOMB_COUNT = bombCount;
 
         Y2 = HEIGHT - 20;
         X2 = WIDTH - 20;
@@ -56,7 +65,23 @@ public class GameLayout {
         setVerticalLines();
         setHorizontalLines();
         setTime();
+        setFlagCount();
         gameScene = new Scene(root, WIDTH, HEIGHT, Color.rgb(150, 150, 150));
+    }
+
+    private void setFlagCount() {
+        flagCount = 0;
+        flagCountText.setText("" + flagCount + "/" + BOMB_COUNT);
+        flagCountText.setLayoutX(X2 - (TILE_SIZE * 2));
+        flagCountText.setLayoutY(Y / 2);
+        Flag flagIcon = new Flag((Y / 2) - 15, X2 - (TILE_SIZE * 3));
+        root.getChildren().add(flagIcon);
+        root.getChildren().add(flagCountText);
+    }
+
+    public void updateFlagCount(int addOrSubtract) {
+        flagCount += addOrSubtract;
+        flagCountText.setText("" + flagCount + "/" + BOMB_COUNT);
     }
 
     private void setTime() {
