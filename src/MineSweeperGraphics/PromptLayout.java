@@ -40,7 +40,7 @@ public class PromptLayout {
 
     private void setPromptLayout() {
         GRID.setVgap(15);
-        GRID.setPadding(new Insets(200, 200, 200, 200));
+        GRID.setPadding(new Insets(150, 150, 150, 150));
         GRID.setAlignment(Pos.CENTER);
 
         GRID.add(input, 0, 1);
