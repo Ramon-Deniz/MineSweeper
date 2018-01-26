@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class GameLogic {
 
     //Boundaries
-    private static final int ROW_MIN = 10, ROW_MAX = 47, COL_MIN = 10, COL_MAX = 94;
+    public static final int ROW_MIN = 1, ROW_MAX = 100, COL_MIN = 1, COL_MAX = 100;
 
     public static boolean setErrors(PromptLayout prompt, int rows, int columns, int bombCount) {
         boolean valid = true;
@@ -51,8 +51,8 @@ public class GameLogic {
         int col = game.getColumn(coordX);
         if (map.getBombLocations()[row][col] == -1) {
             JOptionPane.showMessageDialog(null,
-                    "You clicked on a bomb",
-                    "Game Over",
+                    "You clicked on a bomb!",
+                    "Game Over!",
                     JOptionPane.ERROR_MESSAGE);
             game.newGame(primaryStage, prompt, false);
         }
@@ -64,8 +64,9 @@ public class GameLogic {
         GraphicsAppender.addTile(game, row, col);
         map.tilesRevealed--;
         if (map.tilesRevealed == map.getBombCount()) {
-            JOptionPane.showMessageDialog(null, "You've found all the bombs. \nTime: "+game.time.getTime(),
-                    "You've won",
+            JOptionPane.showMessageDialog(null, "You've found all the bombs!"
+                    + "\nTime: "+game.time.getTime(),
+                    "You've won!",
                     JOptionPane.PLAIN_MESSAGE);
             game.newGame(primaryStage, prompt,true);
         }
